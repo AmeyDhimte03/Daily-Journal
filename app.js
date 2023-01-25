@@ -1,8 +1,9 @@
 const express = require("express");
 // const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const _ = require('lodash/string');
+const _ = require('lodash');
 const mongoose=require('mongoose');
+
 
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -25,15 +26,27 @@ mongoose.connect("mongodb+srv://ameydhimte:mongodbdatabasepassword@cluster0.0obm
 
 
 
-const posts=[];
+// const posts=[];
+const postSchema=new mongoose.Schema({
+  title:String,body:String
+})
 
+const BlogPost=mongoose.model("BlogPost",postSchema);
 
 
 
 
 app.get("/",(req,res)=>{
-  res.render("home",{homeStartingContent:homeStartingContent,
-                      posts:posts});
+
+  BlogPost.find().then((posts)=>{
+    
+      res.render("home",{homeStartingContent:homeStartingContent,
+                          posts:posts});
+
+
+  }).catch((err)=>{
+    console.log(err);
+  })
 });
 
 app.get("/contact",(req,res)=>{
@@ -49,30 +62,43 @@ app.get("/compose",(req,res)=>{
 });
 
 app.get("/posts/:postName",(req,res)=>{
-  const index=posts.findIndex(item=> _.lowerCase(item.title)===_.lowerCase(req.params.postName));
-  if(index!==-1){
-    const blogTitle=posts[index].title;
-    const blogContent=posts[index].body;
-    // const start10chars=blogContent.substring(0,10)+" ...";
-    // res.render("post",{blogTitle:blogTitle,start10chars:start10chars});
-    res.render("post",{blogTitle:blogTitle,blogContent:blogContent});
-  }
-  else{ res.redirect("/");}
+  // const index=posts.findIndex(item=> _.lowerCase(item.title)===_.lowerCase(req.params.postName));
+  postTitle=_.lowerCase(req.params.postName);
+
+  BlogPost.findOne({title:postTitle}).then((post)=>{
+    // if(post==null){
+    //   console.log("Blog with title: "+postTitle+" doesn't exist");
+    //   res.redirect("/");
+    // }
+    // else
+    res.render("post",{postTitle:postTitle,post:post});
+  }).catch((err)=>{
+    console.log("Error while tryin to click on read me is: "+err);
+  })
+
+
+
+  // if(index!==-1){
+  //   const blogTitle=posts[index].title;
+  //   const blogContent=posts[index].body;
+  //   res.render("post",{blogTitle:blogTitle,blogContent:blogContent});
+  // }
+  // else{ res.redirect("/");}
 });
 
 
-app.post("/compose",(req,res)=>{
+// app.post("/compose",(req,res)=>{
   
-  let blogTitle=req.body.newBlogTitle;
-  let blogBody=req.body.newBlogContent;
+//   let blogTitle=req.body.newBlogTitle;
+//   let blogBody=req.body.newBlogContent;
   
-  let blog={
-    title:blogTitle,
-    body:blogBody
-  };
-  posts.push(blog);
-  res.redirect("/");
-})
+//   let blog={
+//     title:blogTitle,
+//     body:blogBody
+//   };
+//   posts.push(blog);
+//   res.redirect("/");
+// })
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");

@@ -1,7 +1,12 @@
 <%- include("partials/header") -%> 
 
-<h1><%= blogTitle %>  </h1>
+<% if (post==null) { %>
+ <h3>"Blog with title:<%= postTitle %> doesn't exist</h3>
+<% }else{ %>
 
-<p><%= blogContent %> </p>
+<h1><%= post.title %>  </h1>
 
+
+<p><%= post.body %> </p>
+<% } %> 
 <%- include("partials/footer") -%> 
