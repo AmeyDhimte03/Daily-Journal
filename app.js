@@ -87,18 +87,23 @@ app.get("/posts/:postName",(req,res)=>{
 });
 
 
-// app.post("/compose",(req,res)=>{
+app.post("/compose",(req,res)=>{
   
-//   let blogTitle=req.body.newBlogTitle;
-//   let blogBody=req.body.newBlogContent;
+  let blogTitle=_.lowerCase(req.body.newBlogTitle);
+  let blogBody=req.body.newBlogContent;
   
-//   let blog={
-//     title:blogTitle,
-//     body:blogBody
-//   };
-//   posts.push(blog);
-//   res.redirect("/");
-// })
+  let blog=new BlogPost({
+    title:blogTitle,
+    body:blogBody
+  });
+  // posts.push(blog);
+  blog.save().then(()=>{
+    res.redirect("/");
+  }).catch((err)=>{
+    console.log("Error while publishing blog : "+err);
+  })
+
+})
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
