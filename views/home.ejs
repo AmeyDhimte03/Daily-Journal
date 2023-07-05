@@ -1,23 +1,39 @@
 <%- include("partials/header") -%> 
 
-<h1>Home</h1>
+<h1>✒️Home</h1>
 <p><%= homeStartingContent %> </p>
-<% posts.forEach( (post)=>{ %>
-    <h1><%= post.title %> </h1>
-    <% if (post.body.length>=100) { %>
+<% posts.forEach((post)=>{ %>
+    <% if (post.title) { %>
+    <h1>▪️ <%=  post.title %> 
+        <form class="delete-post" action="/delete" method="post">
+            <input type="hidden" name="blog_to_be_deleted" value="<%=post.title%>" placeholder="Blog Title">
+            <button class="btn" type="submit">🗑️</button>
+        </form>
+    </h1>
+    <% if (post.body && post.body.length>=100) { %>
         <p><%= post.body.substring(0,100)+" ..." %>
             <a href="/posts/<%= post.title %> " >Read more</a>
         </p>
     <% } else{ %>
         <p><%= post.body %> </p>
     <% } %> 
+    <% } %>
 <% }) %>
-<form style="padding-top: 1rem;" action="/compose">
-    <button style="margin-bottom: 2rem;" type="submit" class="btn ">Compose a new blog</button>
-</form>
-<!-- <form style="padding-top: 1rem;" action="/">
-    <button style="margin-bottom: 2rem;" type="submit" class="btn ">Delete a blog</button>
-</form> -->
+
+<div class="compose-posts-div">
+    <button class="btn btn-primary"><a href="/compose" class="compose-button">Compose a new blog</a></button>
+    <br>
+</div>
+
+<!-- <div class="delete-posts-div">
+    <br>
+    <form  action="/delete" method="post">
+        <label  for="">Enter the title of the post to be deleted</label><br>
+        <input type="text" name="blog_to_be_deleted" style="height: 3rem; width: 24rem;" placeholder="Blog Title">
+        <button class="btn btn-primary" type="submit">Delete</button>
+    </form>
+</div> -->
+
 <%- include("partials/footer") -%> 
 
 
