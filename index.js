@@ -117,17 +117,17 @@ app.post("/delete", (req, res) => {
       BlogPost.deleteOne({ title: post.title })
         .then(() => {
           //successful deletion popup
-          console.log("succesful deletion of: "+post.title);
+          // console.log("succesful deletion of: "+post.title);
           res.redirect("/");
         })
         .catch((err) => {
           //unsuccessful deletion popup
-          console.log("Unsuccessful deleteion of: "+post.title);
+          // console.log("Unsuccessful deleteion of: "+post.title);
           res.redirect("/");
         });
     }
   }).catch((error)=>{
-    console.log(blogTitle+" named post couldn't be deleted due to: "+error);
+    // console.log(blogTitle+" named post couldn't be deleted due to: "+error);
     //no such blog exists message
   });
 });
