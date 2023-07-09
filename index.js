@@ -5,11 +5,11 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 
 const homeStartingContent =
-  "'Daily Journal' is a personal journaling web application. Some of the key-features include ease of composing new journals, deleting the ones not necesary.  You can use it to record daily diary, thoughts, journeys, moods, and any moments";
+  "'Daily Journal' is a personal journaling web application. Some of the key-features include ease of composing new journals, deleting the ones not necessary.  You can use it to record daily diary, thoughts, journeys, moods, and any moments.";
 const aboutContent =
-  "Hi I'm Amey Dhimte, a beginner developer who developed 'Daily Journal'. Thanks for using my website 😊, I hope you liked it";
+  "Hi I'm Amey Dhimte, a beginner developer who developed 'Daily Journal'. Thanks for using my website 😊, I hope you liked it.";
 const contactContent =
-  "If you have any questions, complaints or feedback. please contact us at : ameydhimte03@gmail.com";
+  "If you have any questions, complaints or feedback. please contact us at : ameydhimte03@gmail.com.";
 
 const app = express();
 
