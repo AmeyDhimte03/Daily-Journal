@@ -7,7 +7,7 @@
     <h1>▪️ <%=  post.title %> 
         <form class="delete-post" action="/delete" method="post">
             <input type="hidden" name="blog_to_be_deleted" value="<%=post.title%>" placeholder="Blog Title">
-            <button class="btn" type="submit">🗑️</button>
+            <button class="btn" type="submit"><i class="fa-solid fa-trash"></i></button>
         </form>
     </h1>
     <% if (post.body && post.body.length>=100) { %>
